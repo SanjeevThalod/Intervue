@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const KickedPage = () => {
+const KickedOut = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,4 +21,4 @@ const KickedPage = () => {
   );
 };
 
-export default KickedPage;
+export default KickedOut;

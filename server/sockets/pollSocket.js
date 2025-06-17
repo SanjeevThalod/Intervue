@@ -26,6 +26,12 @@ export default function pollSocket(io) {
       // Send poll ID back to the teacher for redirect
       socket.emit('poll_created', poll);
 
+      const list = Array.from(participants.values())
+        .filter(p => p.role === 'student')
+        .map(p => p.name);
+
+      io.emit("participant_list", list);
+
       // Schedule poll closure and final result broadcast
       setTimeout(async () => {
         if (activePoll?._id?.toString() !== poll._id.toString()) return;
@@ -48,12 +54,14 @@ export default function pollSocket(io) {
 
     // A. Handle joining poll
     socket.on("join_poll", ({ name, role }) => {
+      const normalizedRole = role.toLowerCase();
+
       if (kickedStudents.has(name)) {
         socket.emit("kicked");
         return;
       }
 
-      participants.set(socket.id, { name, role });
+      participants.set(socket.id, { name, role: normalizedRole });
 
       const list = Array.from(participants.values())
         .filter(p => p.role === 'student')
@@ -62,30 +70,34 @@ export default function pollSocket(io) {
       io.emit("participant_list", list);
     });
 
+
     socket.on("kick_out", (studentName) => {
       for (const [id, user] of participants.entries()) {
         if (user.name === studentName && user.role === "student") {
-          kickedStudents.add(studentName);           
-          io.to(id).emit("kicked");                 
-          participants.delete(id);                  
+          kickedStudents.add(studentName);
+          io.to(id).emit("kicked");
+          participants.delete(id);
           break;
         }
       }
 
-      const updatedList = Array.from(participants.values())
+      const list = Array.from(participants.values())
         .filter(p => p.role === 'student')
         .map(p => p.name);
 
-      io.emit("participant_list", updatedList);
+      io.emit("participant_list", list);
     });
-
-
 
 
     // B. Handle chat message
     socket.on("chat_message", ({ name, message }) => {
+      const list = Array.from(participants.values())
+        .filter(p => p.role === 'student')
+        .map(p => p.name);
+
+      io.emit("participant_list", list);
       io.emit("chat_message", { name, message, timestamp: new Date() });
-      console.log(name + message);
+      console.log(message);
     });
 
 
@@ -102,6 +114,11 @@ export default function pollSocket(io) {
           option: opt.text,
           count: opt.votes
         }));
+        const list = Array.from(participants.values())
+        .filter(p => p.role === 'student')
+        .map(p => p.name);
+
+      io.emit("participant_list", list);
 
         io.emit('poll_results', {
           pollId: activePoll._id,
@@ -114,11 +131,11 @@ export default function pollSocket(io) {
       console.log("Client disconnected:", socket.id);
       participants.delete(socket.id);
 
-      const studentList = Array.from(participants.values())
+      const list = Array.from(participants.values())
         .filter(p => p.role === "student")
         .map(p => p.name);
 
-      io.emit("participant_list", studentList); // 🔁 emit to all
+      io.emit("participant_list", list); // 🔁 emit to all
     });
 
   });

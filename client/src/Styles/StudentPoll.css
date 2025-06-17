@@ -42,7 +42,6 @@
   transition: all 0.3s ease;
 }
 
-
 .option-button.selected {
   border-color: #6b5ed9;
   background-color: #ede9ff;
@@ -54,11 +53,11 @@
 
 .option-button.disabled {
   pointer-events: none;
-  opacity: 0.6;
-  border-color: #ccc !important;
+  opacity: 0.5;
   cursor: not-allowed;
+  background-color: #eaeaea;
+  border-color: #ccc !important;
 }
-
 
 .option-index {
   width: 22px;
@@ -94,11 +93,18 @@
   font-weight: 600;
   font-size: 16px;
   cursor: pointer;
+  transition: opacity 0.3s ease, transform 0.2s ease;
 }
+
+.submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
 /* === Floating Dialog Styles === */
 .floating-dialog {
   position: fixed;
-  bottom: 90px; /* ensures it's above the chat icon */
+  bottom: 90px;
   right: 30px;
   width: 300px;
   background: white;
@@ -267,6 +273,7 @@
   transform: scale(1.1);
 }
 
+/* === Responsive === */
 @media screen and (max-width: 768px) {
   .student-poll-container {
     padding: 20px 16px;

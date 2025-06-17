@@ -44,7 +44,7 @@ const CreatePoll = () => {
     };
 
     socket.emit("new_question", pollData);
-    alert("Event Emitted");
+    alert("Poll Created");
     // Reset
     setQuestion("");
     setOptions([{ text: "", isCorrect: false }, { text: "", isCorrect: false }]);

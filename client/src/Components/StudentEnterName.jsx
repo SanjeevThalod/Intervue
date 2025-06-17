@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "../Styles/StudentWelcome.css";
 
-const StudentEnterName = ({setName}) => {
+const StudentEnterName = ({ setName }) => {
   const [input, setInput] = useState("");
 
   const handleSubmit = () => {
@@ -10,7 +10,9 @@ const StudentEnterName = ({setName}) => {
       alert("Please enter your name");
       return;
     }
-    setName(trimmed);
+    sessionStorage.setItem("studentName", trimmed);
+    sessionStorage.setItem("role", "student");
+    setName(trimmed); 
   };
 
   return (

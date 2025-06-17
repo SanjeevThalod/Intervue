@@ -3,7 +3,6 @@ import socket from "../utils/socket";
 import "../Styles/StudentPoll.css"; // make sure this path is correct
 
 const StudentPoll = () => {
-  const name = sessionStorage.getItem("studentName");
   const [question, setQuestion] = useState(null);
   const [selected, setSelected] = useState("");
   const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -15,25 +14,32 @@ const StudentPoll = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [activeTab, setActiveTab] = useState("chat");
   const messagesEndRef = useRef(null);
+  const [name, setName] = useState(null);
 
+  useEffect(() => {
+  }, []);
+  
+  
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
-
-
+  
+  
   useEffect(() => {
-    const name = sessionStorage.getItem("studentName");
-    const role = sessionStorage.getItem("role");
-    if (name && role) {
-      socket.emit("join_poll", { name, role:"student" });
+    const studentName = sessionStorage.getItem("studentName");
+    if (studentName) {
+      setName(studentName);
+      const role = sessionStorage.getItem("role");
+      socket.emit("join_poll", { name: studentName, role: role || "student" });
     }
+
     socket.on("new_question", (poll) => {
       setQuestion(poll);
       setSelected("");
       setHasSubmitted(false);
       setResults(null);
       setTimeLeft(poll.duration);
-
+      
       // Start countdown
       const timer = setInterval(() => {
         setTimeLeft((prev) => {
@@ -44,6 +50,7 @@ const StudentPoll = () => {
           return prev - 1;
         });
       }, 1000);
+      socket.emit("join_poll", { name: studentName, role });
     });
 
     socket.on("result_for_student", ({ results }) => {

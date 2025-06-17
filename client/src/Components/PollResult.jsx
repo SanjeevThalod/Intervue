@@ -18,8 +18,8 @@ const PollResult = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const handleKickOut = (name)=>{
-    socket.emit("kick_out",name);
+  const handleKickOut = (name) => {
+    socket.emit("kick_out", name);
   }
   const api = import.meta.env.VITE_APP_API;
   useEffect(() => {
@@ -34,8 +34,9 @@ const PollResult = () => {
       }
     });
 
-    socket.on("participant_list", (studentList) => {
-      setParticipants(studentList);
+    socket.on("participant_list", (list) => {
+      setParticipants(list);
+      console.log(list);
     });
 
     socket.on("chat_message", ({ name, message, timestamp }) => {
@@ -150,7 +151,7 @@ const PollResult = () => {
                 {participants.map((name, idx) => (
                   <div key={idx} className="dialog-row">
                     <span>{name}</span>
-                    <button className="kick-btn" onClick={handleKickOut(name)}>Kick out</button>
+                    <button className="kick-btn" onClick={() => handleKickOut(name)}>Kick out</button>
                   </div>
                 ))}
               </div>
