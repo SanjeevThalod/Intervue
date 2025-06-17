@@ -21,9 +21,10 @@ const PollResult = () => {
   const handleKickOut = (name)=>{
     socket.emit("kick_out",name);
   }
+  const api = import.meta.env.VITE_APP_API;
   useEffect(() => {
     // Initial fetch
-    fetch(`http://localhost:5000/api/polls/${id}`)
+    fetch(`${api}/api/polls/${id}`)
       .then((res) => res.json())
       .then((data) => setPoll(data));
 

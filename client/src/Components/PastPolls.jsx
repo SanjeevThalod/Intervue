@@ -5,9 +5,10 @@ import "../Styles/PastPolls.css";
 const PastPolls = () => {
   const [polls, setPolls] = useState([]);
   const navigate = useNavigate();
+  const api = import.meta.env.VITE_APP_API;
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/polls/history")
+    fetch(`${api}/api/polls/history`)
       .then(res => res.json())
       .then(data => setPolls(data))
       .catch(err => console.error("Error fetching polls:", err));
