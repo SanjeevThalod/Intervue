@@ -1,0 +1,9 @@
+*{
+  margin: 0px;
+  padding: 0px;
+}
+body{
+  padding: 100px;
+  font-family: 'Sora';
+  box-sizing: border-box;
+}

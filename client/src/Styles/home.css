@@ -1,0 +1,83 @@
+.home{
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.home .icon{
+  border-radius: 16px;
+  padding: 8px 16px;
+  background: linear-gradient(90deg, #7565D9 0%, #4D0ACD 100%);
+  color: white;
+  margin: 30px;
+}
+.home-heading{
+  font-weight: 400;
+}
+.home-heading span{
+  font-weight: 900;
+}
+.home .gray{
+  color: gray;
+}
+.home-choices{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 80%;
+  margin: 50px;
+}
+.home-student, .home-teacher {
+  box-sizing: border-box;
+  border-radius: 16px;
+  padding: 16px 20px;
+  width: 400px;
+  max-width: 90vw;
+  height: 150px;
+  border: 2px solid rgba(188, 187, 187, 0.6);
+  font-size: 16px;
+  transition: border 0.3s ease;
+}
+
+.home-student:hover, .home-teacher:hover{
+  border: 2px solid blue;
+  cursor: pointer;
+}
+.home-student > b, .home-teacher  b{
+  font-size: 23px;
+  margin-bottom: 30px;
+}
+.home-cont{
+  background: linear-gradient(99.18deg, #8F64E1 -46.89%, #1D68BD 223.45%);
+  color: white;
+  padding: 15px 50px;
+  border-radius: 99px;
+  font-size: 18px;
+  border: none;
+  outline: none;
+}
+@media screen and (max-width: 768px) {
+  .home-heading {
+    text-align: center;
+    font-size: 20px;
+  }
+
+  .home-student, .home-teacher {
+    width: 100%;
+    font-size: 15px;
+    height: auto;
+    padding: 12px;
+  }
+
+  .home-student > b, .home-teacher b {
+    font-size: 18px;
+  }
+
+  .home-cont {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+}
